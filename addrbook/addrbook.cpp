@@ -18,7 +18,7 @@ addrbook::addrbook(QWidget *parent) :
 
     //界面属性预处理
     QTableWidget *tableWidget = ui->tableWidget;
-    tableWidget->setRowCount(20);     //设置行数为10
+    tableWidget->setRowCount(7);     //设置行数为10
     tableWidget->setColumnCount(3);   //设置列数为3
     tableWidget->setWindowTitle("QTableWidget & Item");
     tableWidget->resize(412, 230);  //设置表格
@@ -31,7 +31,7 @@ addrbook::addrbook(QWidget *parent) :
     QHeaderView *headerView = tableWidget->horizontalHeader();
     headerView->resizeSection(0,78);//设置第一列宽
     headerView->resizeSection(1,110);//设置第二列宽
-    headerView->resizeSection(2,198);//设置第三列宽
+    headerView->resizeSection(2,205);//设置第三列宽
     headerView->setSectionResizeMode(QHeaderView::Fixed);//列表不能移动
     QStringList header;//表头
     header<<"姓名"<<"电话号码"<<"地址";
@@ -44,10 +44,6 @@ addrbook::addrbook(QWidget *parent) :
     connect(ui->SearchButton,SIGNAL(clicked()),this,SLOT(Search()));
 
  //   Load(tableWidget);
-    //插入数据
-    HashTable.Insert("Jeff","15959595959","werwe");
-    HashTable.Insert("Candy","13838383838","wewrwdde");
-
 
     Show();
 }
@@ -100,26 +96,46 @@ void addrbook::Load(){
     }
     file->close();
     QMessageBox::information(NULL, "提示","读取文件成功!          ", QMessageBox::Ok);
+    int RowCount = HashTable.getCnt();
+    ui->tableWidget->setRowCount(RowCount);
     Show();
 }
 
 void addrbook::Save(){
-   QMessageBox::information(NULL, "Title", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    QFile *file=new QFile("data.out");
+    file->open(QIODevice::WriteOnly|QIODevice::Text);
+    QTextStream stream(file);
+    QString Name, Num, Addr;
+    for(int i=0;i<HashTable.getSize();i++)
+        if(HashTable.table[i]!=NULL)
+        {
+           Name = QString::fromStdString(HashTable.table[i]->getName());
+           Num = QString::fromStdString(HashTable.table[i]->getNum());
+           Addr = QString::fromStdString(HashTable.table[i]->getAddr());
+           stream<<Name<<" ";
+           stream<<Num<<" ";
+           stream<<Addr<<" ";
+           stream<<endl;
+        }
+   QMessageBox::information(NULL, "提示", "保存成功",QMessageBox::Ok);
 }
 
 void addrbook::Insert(){
-    //InsertDialog dialog;
-  //  dialog.show();
-     //  QDialog dialog;
-     //  dialog.show();
-   // if (dialog.exec() == QDialog::Accepted)
-   // {
- //       QString Name = dialog.getName();
- //       QString Num = dialog.getNum();
-  //      QString Addr = dialog.getAddr();
-  //      HashTable.Insert(Name.toStdString(),Num.toStdString(),Addr.toStdString());
-   // }
-    QMessageBox::information(NULL, "提示", "插入成功", QMessageBox::Ok);
+   // QDialog dialog;
+    AddrDialog dialog;
+   //     dialog.show();
+ //   QMessageBox::information(NULL, "提示", "插入成功", QMessageBox::Ok);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        QString Name = dialog.getName();
+        QString Num = dialog.getNum();
+        QString Addr = dialog.getAddr();
+        HashTable.Insert(Name.toStdString(),Num.toStdString(),Addr.toStdString());
+        int RowCount = HashTable.getCnt();
+        ui->tableWidget->setRowCount(RowCount);
+        Show();
+        QMessageBox::information(NULL, "提示", "添加成功!", QMessageBox::Ok);
+    }
 }
 
 void addrbook::Search(){

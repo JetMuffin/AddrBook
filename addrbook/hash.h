@@ -38,7 +38,7 @@ public:
 class HashTable
 {
 private:
-
+    int cnt;
     int size;
 public:
 
@@ -56,6 +56,11 @@ public:
         {
             table[i] = NULL;
         }
+    }
+
+    int getCnt()
+    {
+        return this->cnt;
     }
 
     int GetKey(string num){
@@ -117,6 +122,7 @@ public:
             }
         }
         table[key] = new HashElem(Num,Name,Addr);
+        cnt ++;
     }
 
     void Destroy()
@@ -125,6 +131,7 @@ public:
         {
             table[i] = NULL;
         }
+        cnt = 0;
     }
 };
 

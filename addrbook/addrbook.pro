@@ -13,9 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        addrbook.cpp
+        addrbook.cpp \
+    addrdialog.cpp
 
 HEADERS  += addrbook.h \
-    hash.h
+    hash.h \
+    addrdialog.h
 
-FORMS    += addrbook.ui
+FORMS    += addrbook.ui \
+    addrdialog.ui

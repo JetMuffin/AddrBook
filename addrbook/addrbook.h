@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QTableWidget>
 #include "hash.h"
-
+#include "addrdialog.h"
 
 namespace Ui {
 class addrbook;
