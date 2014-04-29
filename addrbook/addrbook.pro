@@ -22,3 +22,8 @@ HEADERS  += addrbook.h \
 
 FORMS    += addrbook.ui \
     addrdialog.ui
+
+RESOURCES += \
+    icon.qrc
+RC_FILE = addrbook.rc
+

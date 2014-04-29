@@ -1,4 +1,4 @@
-#ifndef ADDRBOOK_H
+﻿#ifndef ADDRBOOK_H
 #define ADDRBOOK_H
 
 #include <QMainWindow>
@@ -24,6 +24,7 @@ public slots:
     void Save();
     void Search();
     void Insert();
+    void Create();
 
 private:
     Ui::addrbook *ui;

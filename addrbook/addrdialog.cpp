@@ -1,4 +1,4 @@
-#include "addrdialog.h"
+﻿#include "addrdialog.h"
 #include "ui_addrdialog.h"
 #include <QMessageBox>
 
@@ -9,7 +9,7 @@ AddrDialog::AddrDialog(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->SubmitButton,SIGNAL(clicked()),this,SLOT(Submit()));
     connect(ui->CancelButton,SIGNAL(clicked()),this,SLOT(Cancel()));
-    setWindowTitle(tr("添加记录"));
+    setWindowTitle(QStringLiteral("添加记录"));
 }
 
 AddrDialog::~AddrDialog()
