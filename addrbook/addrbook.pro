@@ -24,6 +24,8 @@ FORMS    += addrbook.ui \
     addrdialog.ui
 
 RESOURCES += \
-    icon.qrc
+    icon.qrc \
+    qss.qrc \
+    img.qrc
 RC_FILE = addrbook.rc
 

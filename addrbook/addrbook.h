@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include "hash.h"
 #include "addrdialog.h"
+#include "ui_addrbook.h"
 
 namespace Ui {
 class addrbook;
@@ -25,6 +26,8 @@ public slots:
     void Search();
     void Insert();
     void Create();
+    void Close();
+    void mousePressEvent(QMouseEvent *event);
 
 private:
     Ui::addrbook *ui;

@@ -1,0 +1,45 @@
+#Body{
+    background:url("bg.png") repeat scroll 0 0;
+    border-bottom-right-radius:5px;
+    border-bottom-left-radius:5px;
+ }
+
+QPushButton{
+    border:1px solid #bbb;
+    border-radius:5px;
+    padding:2px 4px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:1 #e6e6e6);
+    color:#666666;
+    }
+QPushButton::hover{
+    background-color:#E6E6E6;
+    }
+#SearchButton{
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
+    }
+#LoadButton,#SaveButton,#CloseButton{
+    background:none;
+    border:none;
+    }
+#Header,#Body{
+    border:1px solid #bbb;
+    }
+#Header{
+    background:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f9f9f9, stop:1 #f3f3f3);
+    border-top-right-radius:5px;
+    border-top-left-radius:5px;
+    }
+#Shadow{
+    background:qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6f6f6f, stop:1 #ddd);
+}
+QLineEdit{
+    border-radius:5px;
+    border: 1px solid #bbb;
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+    }
+QTableWidget{
+    border:1px solid #C0C0C0;
+    border-radius:5px;
+    }

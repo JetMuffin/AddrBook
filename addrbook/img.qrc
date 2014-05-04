@@ -1,9 +1,8 @@
 <RCC>
-    <qresource prefix="/icon">
-        <file>logo.png</file>
+    <qresource prefix="/">
+        <file>bg.png</file>
         <file>info.png</file>
         <file>load.png</file>
         <file>save.png</file>
-        <file>exit.png</file>
     </qresource>
 </RCC>

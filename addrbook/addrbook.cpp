@@ -9,10 +9,15 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include <QTextCodec>
+#include <QFrame>
+#include <QMouseEvent>
+#include <Windows.h>
+#include <QScrollBar>
 HashTable HashTable(40);
 
 addrbook::addrbook(QWidget *parent) :
     QMainWindow(parent),
+
     ui(new Ui::addrbook)
 {
     ui->setupUi(this);
@@ -21,10 +26,10 @@ addrbook::addrbook(QWidget *parent) :
 
     //界面属性预处理
     QTableWidget *tableWidget = ui->tableWidget;
-    tableWidget->setRowCount(7);     //设置行数为10
+    tableWidget->setRowCount(9);     //设置行数为10
     tableWidget->setColumnCount(3);   //设置列数为3
     tableWidget->setWindowTitle("QTableWidget & Item");
-    tableWidget->resize(412, 230);  //设置表格
+    tableWidget->resize(490, 270);  //设置表格
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//不可编辑
     tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);  //整行选中的方式
     tableWidget->verticalHeader()->setVisible(false);   //隐藏列表头
@@ -32,21 +37,46 @@ addrbook::addrbook(QWidget *parent) :
     tableWidget->setAlternatingRowColors(true);//隔行显示颜色
     tableWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);//垂直滚动条按项移动
     QHeaderView *headerView = tableWidget->horizontalHeader();
-    headerView->resizeSection(0,78);//设置第一列宽
-    headerView->resizeSection(1,110);//设置第二列宽
-    headerView->resizeSection(2,205);//设置第三列宽
+    headerView->resizeSection(0,98);//设置第一列宽
+    headerView->resizeSection(1,130);//设置第二列宽
+    headerView->resizeSection(2,249);//设置第三列宽
     headerView->setSectionResizeMode(QHeaderView::Fixed);//列表不能移动
     QStringList header;//表头
     header<<QStringLiteral("姓名")<<QStringLiteral("电话号码")<<QStringLiteral("地址");
     tableWidget->setHorizontalHeaderLabels(header);
+
+    //滚动条样式
+    tableWidget->horizontalScrollBar()->setStyleSheet("QScrollBar{background:transparent; height:10px;}"
+      "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px;}"
+      "QScrollBar::handle:hover{background:gray;}"
+      "QScrollBar::sub-line{background:transparent;}"
+      "QScrollBar::add-line{background:transparent;}");
+    tableWidget->verticalScrollBar()->setStyleSheet("QScrollBar{background:transparent; width: 10px;}"
+      "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px;}"
+      "QScrollBar::handle:hover{background:gray;}"
+      "QScrollBar::sub-line{background:transparent;}"
+      "QScrollBar::add-line{background:transparent;}");
+
 
     //事件监听处理
     connect(ui->LoadButton,SIGNAL(clicked()),this,SLOT(Load()));
     connect(ui->SaveButton,SIGNAL(clicked()),this,SLOT(Save()));
     connect(ui->InsertButton,SIGNAL(clicked()),this,SLOT(Insert()));
     connect(ui->SearchButton,SIGNAL(clicked()),this,SLOT(Search()));
-    connect(ui->CreateButton,SIGNAL(clicked()),this,SLOT(Create()));;
+    connect(ui->CreateButton,SIGNAL(clicked()),this,SLOT(Create()));
+    connect(ui->CloseButton,SIGNAL(clicked()),this,SLOT(Close()));;
  //   Load(tableWidget);
+
+    //样式表读取
+    QString qss;
+    QFile qssFile(":/style.qss");
+    qssFile.open(QFile::ReadOnly);
+    if(qssFile.isOpen())
+    {
+       qss = QLatin1String(qssFile.readAll());
+       setStyleSheet(qss);
+       qssFile.close();
+     }
 
     Show();
 }
@@ -55,6 +85,18 @@ addrbook::~addrbook()
 {
     delete ui;
 }
+
+
+void addrbook::mousePressEvent(QMouseEvent *event)
+{
+    if (ReleaseCapture())
+        SendMessage(HWND(this->winId()), WM_SYSCOMMAND, SC_MOVE + HTCAPTION, 0);
+    event->ignore();
+}
+void addrbook::Close(){
+    close();
+}
+
 void addrbook::Show(){
     //表格显示
     int cntItem = 0 ;
